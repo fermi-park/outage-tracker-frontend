@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChakraProvider, Box, VStack, Grid, theme, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function App() {
   // Mock data for IP outage display
@@ -8,6 +9,15 @@ function App() {
     { ip: '192.168.1.1', status: 'Active', location: '12345' },
     { ip: '192.168.1.2', status: 'Inactive', location: '12345' },
     { ip: '192.168.1.3', status: 'Active', location: '12345' },
+    // ... more data
+  ];
+
+  // Mock data for time series visualization
+  const timeSeriesData = [
+    { time: '2024-04-26 01:00', activeIPs: 120 },
+    { time: '2024-04-26 05:00', activeIPs: 110 },
+    { time: '2024-04-26 09:00', activeIPs: 100 },
+    { time: '2024-04-26 13:00', activeIPs: 130 },
     // ... more data
   ];
 
@@ -39,6 +49,27 @@ function App() {
                 ))}
               </Tbody>
             </Table>
+            {/* Time series visualization */}
+            <ResponsiveContainer width="95%" height={400}>
+              <LineChart
+                width={500}
+                height={300}
+                data={timeSeriesData}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="time" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="activeIPs" stroke="#8884d8" activeDot={{ r: 8 }} />
+              </LineChart>
+            </ResponsiveContainer>
           </VStack>
         </Grid>
       </Box>
