@@ -2,7 +2,25 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- Node.js and npm
+- Docker
+- Git
+- AWS CLI (configured with user credentials)
+
+## Cloning the Repository
+
+To clone the repository and set up the project, run the following commands:
+
+```
+git clone https://github.com/fermi-park/outage-tracker-frontend.git
+cd outage-tracker-frontend
+npm install
+```
+
+## Running the Frontend Application
 
 In the project directory, you can run:
 
@@ -39,36 +57,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
 ## Docker Deployment for Zmap Scans
 
 To deploy the Docker container for running zmap scans, follow these steps:
@@ -94,3 +82,41 @@ To deploy the Docker container for running zmap scans, follow these steps:
 Ensure that you have the `ip_list.txt` file with the IP addresses you wish to scan in the same directory as your Dockerfile before building the image.
 
 For more information on the zmap scan script and its output, refer to the `zmap_scan.sh` script located at `/usr/src/app/zmap_scan.sh` within the Docker container.
+
+## Deploying to Netlify
+
+To deploy the frontend application to Netlify, follow these steps:
+
+1. Build the React application:
+   ```
+   npm run build
+   ```
+
+2. Deploy the build directory to Netlify using the provided token:
+   ```
+   deploy_netlify build --token fbed2852db16473c98ea8b46a8f94199
+   ```
+
+3. The application will be available at the provided Netlify URL.
+
+## AWS Timestream Integration
+
+To store scan results in AWS Timestream, ensure the AWS CLI is configured with the correct credentials and region. The `zmap_scan.sh` script will automatically send the scan results to the `ScanResults` table in Timestream.
+
+## Verifying Frontend Functionality
+
+To verify that the frontend is correctly displaying data:
+
+1. Ensure the backend server is running and serving the `responsive_ips.txt` file.
+2. Access the frontend application and check if the data visualization reflects the scan results.
+
+## Troubleshooting
+
+If you encounter issues during setup or deployment, consider the following:
+
+- Check that all prerequisites are installed and correctly configured.
+- Ensure the `ip_list.txt` file is formatted correctly and placed in the correct directory.
+- Verify that the AWS CLI is configured with the correct permissions to write to Timestream.
+- For Docker-related issues, ensure Docker is running and you have the necessary permissions to create and run containers.
+
+For more detailed troubleshooting, refer to the official documentation for each tool or service.
