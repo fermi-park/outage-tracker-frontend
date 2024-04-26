@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChakraProvider, Box, VStack, Grid, theme, Table, Thead, Tbody, Tr, Th, Td } from '@chakra-ui/react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 function App() {
-  // Mock data for IP outage display
-  const mockData = [
-    { ip: '192.168.1.1', status: 'Active', location: '12345' },
-    { ip: '192.168.1.2', status: 'Inactive', location: '12345' },
-    { ip: '192.168.1.3', status: 'Active', location: '12345' },
-    // ... more data
-  ];
+  const [responsiveIPs, setResponsiveIPs] = useState([]);
+
+  // Fetch responsive IPs on component mount
+  useEffect(() => {
+    // Fetch the responsive IPs from the exposed server URL
+    fetch('https://ip-outage-tracker-kmcrtumk.devinapps.com/responsive_ips.txt')
+      .then(response => response.text())
+      .then(text => {
+        const ips = text.split('\n').map(ip => ({ ip, status: 'Active', location: 'Unknown' })); // Assuming all IPs are active for now
+        setResponsiveIPs(ips);
+      });
+  }, []);
 
   // Mock data for time series visualization
   const timeSeriesData = [
@@ -38,7 +43,7 @@ function App() {
                 </Tr>
               </Thead>
               <Tbody>
-                {mockData.map((data, index) => (
+                {responsiveIPs.map((data, index) => (
                   <Tr key={index}>
                     <Td>{data.ip}</Td>
                     <Td>{data.status}</Td>
