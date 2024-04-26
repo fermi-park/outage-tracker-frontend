@@ -68,3 +68,29 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Docker Deployment for Zmap Scans
+
+To deploy the Docker container for running zmap scans, follow these steps:
+
+1. Build the Docker image:
+   ```
+   docker build -t zmap-outage-tracker .
+   ```
+   This command builds the Docker image named `zmap-outage-tracker` from the Dockerfile in the current directory.
+
+2. Run the Docker container:
+   ```
+   docker run --name zmap-outage-tracker-test -d zmap-outage-tracker
+   ```
+   This command runs the Docker container named `zmap-outage-tracker-test` in detached mode using the image `zmap-outage-tracker`.
+
+3. Check the Docker container logs:
+   ```
+   docker logs zmap-outage-tracker-test
+   ```
+   This command retrieves the logs from the Docker container to verify its operation and the results of the zmap scan.
+
+Ensure that you have the `ip_list.txt` file with the IP addresses you wish to scan in the same directory as your Dockerfile before building the image.
+
+For more information on the zmap scan script and its output, refer to the `zmap_scan.sh` script located at `/usr/src/app/zmap_scan.sh` within the Docker container.
